@@ -92,9 +92,17 @@ Or 1 step = 0.015361183933553 degrees<br>
 | No. of steps to move 1 degree | 46.41852356 | 65.09914889 |
 | No of degrees 1 step moves | 0.021543124 | 0.015361184 |
 
-# Flashing ESP8266
+# Flashing ESP8266 (i.e. putting the code onto the ESP8266)
 
 If you are not familiar with flashing microcontroller, I highly recommend the Random Nerds tutorials.  This repo uses VS Code running PlatformIO, and I recommend this is what you use to flash - there is a full guide here: https://randomnerdtutorials.com/vs-code-platformio-ide-esp32-esp8266-arduino/ on how to set everything up - this can be daunting at first, but if you follow the guide, you should be fine.  Once you have VS Code setup and PlatformIO installed in VS Code just follow the steps below:
 
-1. Clone the github repo or download the code and unzip to folder.  You should now have a folder with all the code in multiple folders and few files in the top level directory (e.g. readme.md)
-2. 
+1. Clone the github repo or download the code and unzip to folder.  You should now have a folder with all the code in multiple folders and few files in the top level directory (e.g. readme.md, platformio.ini and some others)
+2. Open VS Code, go to File --> Open Folder and find the folder you unzipped the files into (this folder must contain platformio.ini at the top level within it - not another folder with the platformio.ini in that)
+3. Plug your ESP8266 into computer (if using an ESP32, update the platformio.ini file with your board, platform, and remove the filesystem line as you'll use SPIFFS not LITTLEFS)
+4. Click the alien head in the left hand menu (platformio icon) and click Platform --> Erase Flash (just to be sure) and wait for a success message in the terminal.  Should take 15-20 seconds ish.
+5. In theame menu, click Platform --> Build Filesystem Image and wait for a success message in the terminal. Should take a few seconds.
+6. In the same menu, click Platform --> Upload Filesystem Image and wait for a success message in the terminal.  These steps, wipe the flash memory, then uploads the HTML, CSS and JS files in the "data" folder to the microcontroller.  Should take 10-15 seconds.
+7. Click the right pointing arrow at the bottom of your screen (or click the alien head in the left hand menu --> General --> upload).  This will compile the code and then upload the binary to your microcontroller, then reset it.  This should take around 40-50 seconds.  If you now click the 2 pronged plug thing at the bottom of your screen you should get the serial messages from the microcontroller.
+8. With your phone/laptop/computer/tablet open your wifi settings, and connect to the HadleyTelescope wifi network
+9. If not autodirected, go to the sign-in page (192.168.4.1 by default) and click on "Configuration".  In the fist SSID box, put your wifi network name and the password in the Password field. Leave the rest blank or with default values.  Click "SAVE"
+10. If you clicked the 2 pronged plug icon thing at the bottom of your screen (serial monitor terminal) you should then see a bunch more info and the local IP of your microcontroller.  If not, you can probably find it with the hostname of [http://hadleyTelescope](http://hadleyTelescope) or in your router's DHCP tables.  If you didn't click the 2 pronged plug - you can do so now, and click the reset button on your microcontroller (or unplug and plug back it back in) and you can get the local IP address.

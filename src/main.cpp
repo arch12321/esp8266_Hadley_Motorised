@@ -613,7 +613,7 @@ void saveConfigData()
 
 //Telescope functions here
 
-/*  Below is only used if using the ULN2003 driver
+/*  Below is only used if using the ULN2003 driver  Note this is only for 1 stepper motor - the below will need to be repeated for the 2nd and the appropriate GPIO pin numbers updated.
 #define IN1 2
 #define IN2 0
 #define IN3 4
@@ -624,7 +624,7 @@ AccelStepper stepper(AccelStepper::HALF4WIRE, IN1, IN3, IN2, IN4);
 //Start of code used for A4988 driver (bipolar)
 #define DIR_TTABLE 4
 #define STEP_TTABLE 5
-//#define MITYPE 1
+//#define MITYPE 1 - not sure what this was for - to be investigated at some point.  perhaps.
 
 #define DIR_TSCOPE 12
 #define STEP_TSCOPE 14
@@ -636,8 +636,6 @@ AccelStepper tscopestepper(AccelStepper::DRIVER, STEP_TSCOPE, DIR_TSCOPE);
 
 String message = "";
 
-
-
 //Define variables for command API / to be send from webform
 String direction ="STOP";
 String steps;
@@ -647,31 +645,6 @@ String TtableSteps;
 String TscopeSteps;
 
 bool notifyStop = false;
-
-/*
-// Initialize LittleFS filesystem
-void initLittleFS() {
-  if (!LittleFS.begin()) {
-    Serial.println("Something went wrong with mounting LittleFS");
-  }
-  else{
-    Serial.println("LittleFS mounted OK");
-  }
-}
-
-
-// Initialize WiFi
-void initWiFi() {
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
-  Serial.print("Connecting to WiFi ..");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print('.');
-    delay(1000);
-  }
-  Serial.println(WiFi.localIP());
-}
-*/
 
 // Create webservers & websocket object
 AsyncWebServer server(80);
@@ -794,12 +767,9 @@ void initOTA() {
 
 void setup()
 {
-  // put your setup code here, to run once:
   Serial.begin(115200);
   while (!Serial);
-
   delay(200);
-  
   Serial.print("\nStarting Async_AutoConnectAP using " + String(FS_Name));
   Serial.println(" on " + String(ARDUINO_BOARD));
   Serial.println(ESP_ASYNC_WIFIMANAGER_VERSION);
@@ -833,16 +803,16 @@ void setup()
       // prevents debug info from the library to hide err message.
       delay(100);
       
-#if USE_LITTLEFS
-      Serial.println(F("LittleFS failed!. Please use SPIFFS or EEPROM. Stay forever"));
-#else
-      Serial.println(F("SPIFFS failed!. Please use LittleFS or EEPROM. Stay forever"));
-#endif
+      #if USE_LITTLEFS
+        Serial.println(F("LittleFS failed!. Please use SPIFFS or EEPROM. Stay forever"));
+      #else
+        Serial.println(F("SPIFFS failed!. Please use LittleFS or EEPROM. Stay forever"));
+      #endif
 
       while (true)
-      {
-        delay(1);
-      }
+        {
+          delay(1);
+        }
     }
   }
 

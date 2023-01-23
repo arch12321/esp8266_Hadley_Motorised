@@ -91,3 +91,10 @@ Or 1 step = 0.015361183933553 degrees<br>
 | Steps per revolution (telescope) | 16710.66848 | 23435.6936 |
 | No. of steps to move 1 degree | 46.41852356 | 65.09914889 |
 | No of degrees 1 step moves | 0.021543124 | 0.015361184 |
+
+# Flashing ESP8266
+
+If you are not familiar with flashing microcontroller, I highly recommend the Random Nerds tutorials.  This repo uses VS Code running PlatformIO, and I recommend this is what you use to flash - there is a full guide here: https://randomnerdtutorials.com/vs-code-platformio-ide-esp32-esp8266-arduino/ on how to set everything up - this can be daunting at first, but if you follow the guide, you should be fine.  Once you have VS Code setup and PlatformIO installed in VS Code just follow the steps below:
+
+1. Clone the github repo or download the code and unzip to folder.  You should now have a folder with all the code in multiple folders and few files in the top level directory (e.g. readme.md)
+2. 
